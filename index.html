@@ -44,7 +44,7 @@
             font-size: inherit;
             font-weight: inherit;
             color: inherit;
-            width: 3.6rem;
+            width: 4.3rem;
         }
 
         .range {
@@ -129,7 +129,7 @@
             document.body.style.background = `hsl(${val}, 100%, 50%)`;
             document.querySelector(":root").style.setProperty("--color-dark", `hsl(${val}, 90%, 30%)`);
 
-            hueNumber.style.width = `${hueNumber.value}`.length + "ch";
+            //hueNumber.style.width = (`${hueNumber.value}`.length + 1) + "ch";
 
         };
 
