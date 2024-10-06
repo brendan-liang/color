@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>color</title>
+    <style>
+        :root {
+            --color-dark: hsl(360, 100%, 20%);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+            gap: 1rem;
+        }
+
+        #color-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 10rem;
+        }
+
+        h1 {
+            color: var(--color-dark);
+        }
+
+        .num {
+            background: none;
+            border: none;
+            font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+            width: 3.6rem;
+        }
+
+        .range {
+            appearance: none;
+            height: 0.5rem;
+            width: 100%;
+            border-radius: 0.25rem;
+            background: rgba(0, 0, 0, 0.3)
+        }
+
+        .range::-webkit-slider-thumb {
+            appearance: none;
+            background: var(--color-dark);
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        #fs {
+            width: 100%;
+            border: none;
+            height: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            border-radius: 0.75rem;
+            background: rgba(0, 0, 0, 0.1);
+            outline: 2px solid rgba(0, 0, 0, 0.3);
+            color: var(--color-dark);
+            cursor: pointer;
+        }
+
+        #fs:hover {
+            outline: 2px solid white;
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            html {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            html {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 310px) {
+            html {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 230px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>hsl(<input id="huenum" class="num" type="number">, 100%, 100%)</h1>
+    <div id="color-wrap">
+        <input id="huerng" class="range" type="range">
+        <button id="fs">Fullscreen</button>
+    </div>
+
+    <script>
+        const hueNumber = document.querySelector("#huenum");
+        const hueRange = document.querySelector("#huerng");
+        const updateVal = (val) => {
+            hueNumber.value = val;
+            hueRange.value = val / 360 * 100;
+        
+            document.body.style.background = `hsl(${val}, 100%, 50%)`;
+            document.querySelector(":root").style.setProperty("--color-dark", `hsl(${val}, 90%, 30%)`);
+
+            hueNumber.style.width = `${hueNumber.value}`.length + "ch";
+
+        };
+
+        updateVal(360);
+
+        hueNumber.addEventListener("input", (e) => {
+            updateVal(Math.min(Math.max(e.target.value, 0), 360));
+
+            const val = e.target.value;
+            console.log(e.target.value);
+
+        });
+
+        hueRange.addEventListener("input", (e) => {
+            updateVal(Math.round(e.target.value * 360 / 100));
+            
+            const val = e.target.value;
+            console.log(e.target.value);
+        });
+
+        document.querySelector("#fs").addEventListener("click", (e) => {
+            if (document.fullscreenElement == null) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+    </script>
+</body>
+</html>
